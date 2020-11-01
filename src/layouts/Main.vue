@@ -135,19 +135,19 @@
 
       <q-page-sticky v-if="$q.screen.gt.sm" expand position="left">
         <div class="fit q-pt-xl q-px-sm column">
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/list-cheatsheets" >
+          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/active-submissions" >
             <q-icon size="22px" name="list" />
-            <div class="GPL__side-btn__label">List All</div>
+            <div class="GPL__side-btn__label">List Active</div>
           </q-btn>
 
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn">
+          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/add-submission">
             <q-icon size="22px" name="add_circle" />
-            <div class="GPL__side-btn__label">Create New</div>
+            <div class="GPL__side-btn__label">Add New</div>
           </q-btn>
 
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn">
-            <q-icon size="22px" name="subject" />
-            <div class="GPL__side-btn__label">API Searches</div>
+          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/stock-responses">
+            <q-icon size="22px" name="blur_circular" />
+            <div class="GPL__side-btn__label">Stock Responses</div>
             <!-- <q-badge floating color="red" text-color="white" style="top: 8px; right: 16px">
               1
             </q-badge> -->

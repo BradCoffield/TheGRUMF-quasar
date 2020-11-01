@@ -11,12 +11,12 @@ import "firebase/auth";
 import "firebase/firestore";
 
 var firebaseConfig = {
-  apiKey: 'AIzaSyDh_RPQxVpCUAFtGn0zstO9elmUrEMWlls',
-      authDomain: 'rmc-library-cheatsheets.firebaseapp.com',
-      databaseURL: 'https://rmc-library-cheatsheets.firebaseio.com',
-      projectId: 'rmc-library-cheatsheets',
-      storageBucket: 'rmc-library-cheatsheets.appspot.com',
-      messagingSenderId: '263509113587',
+  apiKey: 'AIzaSyDqhYAQirUuT3eKXTyCAQybcZWcAwJUxJU',
+  authDomain: 'thegrumf.firebaseapp.com',
+  databaseURL: 'https://thegrumf.firebaseio.com',
+  projectId: 'thegrumf',
+  storageBucket: 'thegrumf.appspot.com',
+  messagingSenderId: '546436778427',
 };
 // Initialize Firebase
 let firebaseApp = firebase.initializeApp(firebaseConfig);

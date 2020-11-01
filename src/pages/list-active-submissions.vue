@@ -1,8 +1,8 @@
 <template>
-  <q-page padding>
+  <q-page  >
     <div>
-      <h2 style="font-size:48px;font-weight:bold;border-bottom:2px dotted">List Cheatsheets</h2>
-      <br /><br /> 
+      <h2 style="font-size:48px;font-weight:bold;border-bottom:2px dotted">Active Submissions</h2>
+      <!-- <br /><br />  -->
       <q-card>
         <q-table
           row-key="key"
@@ -11,6 +11,7 @@
           color="primary"
           :filter="filter"
           dark
+           
         >`  @`
           <template v-slot:top>
             <q-space />
@@ -30,7 +31,23 @@
                 color="grey"
                 @click="editItem(props)"
                 icon="edit"
-              ></q-btn>
+              ><q-tooltip content-style="font-size: 16px">Edit</q-tooltip></q-btn>
+              <q-btn
+                dense
+                round
+                flat
+                color="grey"
+                @click="viewItem(props)"
+                icon="preview"
+              ><q-tooltip content-style="font-size: 16px">View Details</q-tooltip></q-btn>
+              <q-btn
+                dense
+                round
+                flat
+                color="grey"
+                @click="reviewItem(props)"
+                icon="rate_review"
+              ><q-tooltip content-style="font-size: 16px">Review Submission</q-tooltip></q-btn>
               <q-btn
                 dense
                 round
@@ -38,33 +55,11 @@
                 color="grey"
                 @click="deleteItem(props)"
                 icon="delete"
-              ></q-btn>
+              ><q-tooltip content-style="font-size: 16px">Delete</q-tooltip></q-btn>
             </q-td>
           </template>
   
-          <!-- <template q-slot:item.actions="{ item }">
-            <q-icon small class="mr-2" @click="editItem(item)">
-              mdi-pencil
-            </q-icon>
-            <q-icon small @click="deleteItem(item)"> mdi-delete </q-icon>
-            <q-dialog q-model="dialogDelete" max-width="500px">
-              <q-card>
-                <q-card-title class="headline"
-                  >Are you sure you want to delete this item?</q-card-title
-                >
-                <q-card-actions>
-                  <q-spacer></q-spacer>
-                  <q-btn color="blue darken-1" text @click="closeDelete"
-                    >Cancel</q-btn
-                  >
-                  <q-btn color="blue darken-1" text @click="deleteItemConfirm()"
-                    >OK</q-btn
-                  >
-                  <q-spacer></q-spacer>
-                </q-card-actions>
-              </q-card>
-            </q-dialog>
-          </template> -->
+       
         </q-table>
       </q-card>
     </div>
@@ -82,22 +77,36 @@ export default {
       dialogDelete: false,
       columns: [
         {
-          label: "Cheatsheet Name",
-          name: "cheatsheets",
+          label: "Author",
+          name: "name",
           sortable: true,
           field: "name",
           align: "left",
             classes: 'bg-accent ellipsis',
           style: 'max-width: 100px',
           headerClasses: 'bg-primary text-black'
-        },
-        {
-          name: "updated",
-          label: "Updated",
-          field: "updatedPretty",
+        },    {
+          name: "genre",
+          label: "Genre",
+          field: "genre",
           sortable: true,
            align: "left",
         },
+        {
+          name: "title",
+          label: "Title",
+          field: "title",
+          sortable: true,
+           align: "left",
+        },
+    
+        // {
+        //   name: "updated",
+        //   label: "Updated",
+        //   field: "updatedPretty",
+        //   sortable: true,
+        //    align: "left",
+        // },
         { name: "actions", label: "Actions", field: "", align: "center" }
         // { label: 'Actions', field: 'actions', sortable: false },
         //   { text: 'Calories', value: 'calories' },
@@ -114,7 +123,7 @@ export default {
       currentPage: 1,
       perPage: 5,
       errors: [],
-      ref: this.$firestore.collection("Cheatsheets") //name of the collection in firestore that contains all your real data
+      ref: this.$firestore.collection("issue_Three") //name of the collection in firestore that contains all your real data
     };
   },
   created() {
@@ -123,7 +132,7 @@ export default {
     this.ref.onSnapshot(querySnapshot => {
       this.data = [];
       querySnapshot.forEach(doc => {
-        // console.log(doc.id, doc.data())
+        console.log(doc.id, doc.data())
         let ddate;
         if (doc.data().updated) {
           ddate = new Date(doc.data().updated.toString());
@@ -132,20 +141,53 @@ export default {
         //grabs the individual pieces of our individual records. So they can be table-ified
         this.data.push({
           key: doc.id,
-          name: doc.data().name,
-          description: doc.data().description,
-          url: doc.data().url,
-          updated: doc.data().updated,
-          updatedPretty: doc.data().updated ? ddate.toDateString() : " ",
-
-          categories: doc.data().categories
+              name: doc.data().author,
+              url: doc.data().file,
+              title: doc.data().title,
+              email: doc.data().email,
+              notes: doc.data().notes,
+              issue: doc.data().issue,
+              author_letter: doc.data().author_letter,
+              genre: doc.data().genre,
+              primary_genre: doc.data().primary_genre,
+              ratings: doc.data().ratings,
+              Michael: doc.data().Michael,
+              Ashley: doc.data().Ashley,
+              Brad: doc.data().Brad,
+              finalDecision: doc.data().decision,
+              decisionNotification: doc.data().actuallyNotified,
+              decisionNotes: doc.data().decisionNotes,
         });
+         if (doc.data().decision == "Rejected") {
+              this.pieceRejected = true;
+            }
+            if (doc.data().decision == "Accepted") {
+              this.pieceAccepted = true;
+            }
       });
       this.isLoading = false;
     });
   },
   methods: {
     editItem(item) {
+      console.log(item);
+      //   let itemIndex = this.data.indexOf(item);
+      //   console.log(this.data[itemIndex].key);
+      //   this.$router.push({
+      //     name: "edit-cheatsheet",
+      //     params: { id: this.data[itemIndex].key }
+      //   });
+    },
+    viewItem(item) {
+      console.log(item);
+      //   let itemIndex = this.data.indexOf(item);
+      //   console.log(this.data[itemIndex].key);
+      //   this.$router.push({
+      //     name: "edit-cheatsheet",
+      //     params: { id: this.data[itemIndex].key }
+      //   });
+    },
+    reviewItem(item) {
       console.log(item);
       //   let itemIndex = this.data.indexOf(item);
       //   console.log(this.data[itemIndex].key);
