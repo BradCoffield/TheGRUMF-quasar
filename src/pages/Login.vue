@@ -1,13 +1,20 @@
 <template>
-  <div>
-    <div v-if="!this.$store.state.store.user">
+ 
+     <q-page>
+       <div >
+         <h2>Please Login<div class="text-subtitle2 text-italic">TheGRUMF doesn't ask much but it does ask that you be authorized.</div></h2>
+      <div v-if="!this.$store.state.store.user">
+     
       <div id="firebaseui-auth-container"></div>
+ 
+    
+      </div>
+      <div v-else>
+        You are logged in as {{ this.$store.state.store.user.displayName }}
+      
+      </div>
     </div>
-    <div v-else>
-      You are logged in as {{ this.$store.state.store.user.displayName }}
-      <q-btn color="primary" label="Sign Out" @click="signOut" />
-    </div>
-  </div>
+     </q-page>
 </template>
 
 <script>
@@ -32,14 +39,15 @@ export default {
       new firebaseui.auth.AuthUI(this.$fireAuth);
     ui.start("#firebaseui-auth-container", {
       signInOptions: [
-        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        
         firebase.auth.GoogleAuthProvider.PROVIDER_ID
       ],
       signInSuccessUrl: "/",
       callbacks: {
         signInSuccessWithAuthResult(authResult) {
           console.log("signInSuccessWithAuthResult");
-          // console.log(authResult);
+          console.log(authResult);
+           
         },
         uiShown: function() {
           console.log("uiShown");

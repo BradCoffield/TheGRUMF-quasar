@@ -12,7 +12,7 @@
           class="q-mx-md"
         />
 
-        <q-toolbar-title   shrink class="row items-center no-wrap">
+        <q-toolbar-title shrink class="row items-center no-wrap">
           <!-- <img src="https://cdn.quasar.dev/img/layout-gallery/logo-google.svg"> -->
           <span class="q-ml-sm">TheGRUMF</span>
         </q-toolbar-title>
@@ -46,23 +46,22 @@
 
         <q-space />
 
-        <!-- <div class="q-gutter-sm row items-center no-wrap">
-          <q-btn round dense flat color="text-grey-7" icon="apps">
-            <q-tooltip>Google Apps</q-tooltip>
-          </q-btn>
-          <q-btn round dense flat color="grey-8" icon="notifications">
-            <q-badge color="red" text-color="white" floating>
-              2
-            </q-badge>
-            <q-tooltip>Notifications</q-tooltip>
-          </q-btn>
-          <q-btn round flat>
-            <q-avatar size="26px">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png">
-            </q-avatar>
-            <q-tooltip>Account</q-tooltip>
-          </q-btn>
-        </div> -->
+        <div class="q-gutter-sm row items-center no-wrap">
+          <template v-if="!this.$store.state.store.user"
+            ><q-btn flat label="Sign In" to="/login"></q-btn
+          ></template>
+          <template v-if="this.$store.state.store.user">
+            <q-btn flat label="Sign Out" @click="signOut"></q-btn>
+            <!-- <q-btn round flat>
+              <q-avatar size="26px">
+                <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
+              </q-avatar>
+              <q-tooltip>{{
+                this.$store.state.store.user.displayName
+              }}</q-tooltip>
+            </q-btn> -->
+            </template>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -74,16 +73,22 @@
     >
       <q-scroll-area class="fit">
         <q-toolbar class="GPL__toolbar">
-       
           <q-toolbar-title class="row items-center text-grey-8">
-             
-            <img class="q-pl-md" src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg">
+            <img
+              class="q-pl-md"
+              src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg"
+            />
             <span class="q-ml-sm">Photos</span>
           </q-toolbar-title>
         </q-toolbar>
 
         <q-list padding>
-          <q-item v-for="link in links1" :key="link.text" clickable class="GPL__drawer-item">
+          <q-item
+            v-for="link in links1"
+            :key="link.text"
+            clickable
+            class="GPL__drawer-item"
+          >
             <q-item-section avatar>
               <q-icon :name="link.icon" />
             </q-item-section>
@@ -94,7 +99,12 @@
 
           <q-separator class="q-my-md" />
 
-          <q-item v-for="link in links2" :key="link.text" clickable class="GPL__drawer-item">
+          <q-item
+            v-for="link in links2"
+            :key="link.text"
+            clickable
+            class="GPL__drawer-item"
+          >
             <q-item-section avatar>
               <q-icon :name="link.icon" />
             </q-item-section>
@@ -105,7 +115,12 @@
 
           <q-separator class="q-my-md" />
 
-          <q-item v-for="link in links3" :key="link.text" clickable class="GPL__drawer-item">
+          <q-item
+            v-for="link in links3"
+            :key="link.text"
+            clickable
+            class="GPL__drawer-item"
+          >
             <q-item-section avatar>
               <q-icon :name="link.icon" />
             </q-item-section>
@@ -135,17 +150,44 @@
 
       <q-page-sticky v-if="$q.screen.gt.sm" expand position="left">
         <div class="fit q-pt-xl q-px-sm column">
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/active-submissions" >
+          <q-btn
+            round
+            flat
+            color="accent"
+            stack
+            no-caps
+            size="26px"
+            class="GPL__side-btn"
+            to="/active-submissions"
+          >
             <q-icon size="22px" name="list" />
             <div class="GPL__side-btn__label">List Active</div>
           </q-btn>
 
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/add-submission">
+          <q-btn
+            round
+            flat
+            color="accent"
+            stack
+            no-caps
+            size="26px"
+            class="GPL__side-btn"
+            to="/add-submission"
+          >
             <q-icon size="22px" name="add_circle" />
             <div class="GPL__side-btn__label">Add New</div>
           </q-btn>
 
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn" to="/stock-responses">
+          <q-btn
+            round
+            flat
+            color="accent"
+            stack
+            no-caps
+            size="26px"
+            class="GPL__side-btn"
+            to="/stock-responses"
+          >
             <q-icon size="22px" name="blur_circular" />
             <div class="GPL__side-btn__label">Stock Responses</div>
             <!-- <q-badge floating color="red" text-color="white" style="top: 8px; right: 16px">
@@ -153,15 +195,18 @@
             </q-badge> -->
           </q-btn>
 
-          <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn">
+          <q-btn
+            round
+            flat
+            color="accent"
+            stack
+            no-caps
+            size="26px"
+            class="GPL__side-btn"
+          >
             <q-icon size="22px" name="insert_link" />
             <div class="GPL__side-btn__label">Weblinks</div>
           </q-btn>
-
-          <!-- <q-btn round flat color="grey-8" stack no-caps size="26px" class="GPL__side-btn">
-            <q-icon size="22px" name="import_contacts" />
-            <div class="GPL__side-btn__label">Photo books</div>
-          </q-btn> -->
         </div>
       </q-page-sticky>
     </q-page-container>
@@ -169,42 +214,48 @@
 </template>
 
 <script>
-import { Screen } from 'quasar'
+import { Screen } from "quasar";
 export default {
-  name: 'GooglePhotosLayout',
+  name: "GRUMFLayout",
 
-  data () {
+  data() {
     return {
       leftDrawerOpen: false,
-      search: '',
+      search: "",
       storage: 0.26,
       links1: [
-        { icon: 'photo', text: 'Photos' },
-        { icon: 'photo_album', text: 'Albums' },
-        { icon: 'assistant', text: 'Assistant' },
-        { icon: 'people', text: 'Sharing' },
-        { icon: 'book', text: 'Photo books' }
+        { icon: "photo", text: "Photos" },
+        { icon: "photo_album", text: "Albums" },
+        { icon: "assistant", text: "Assistant" },
+        { icon: "people", text: "Sharing" },
+        { icon: "book", text: "Photo books" }
       ],
       links2: [
-        { icon: 'archive', text: 'Archive' },
-        { icon: 'delete', text: 'Trash' }
+        { icon: "archive", text: "Archive" },
+        { icon: "delete", text: "Trash" }
       ],
       links3: [
-        { icon: 'settings', text: 'Settings' },
-        { icon: 'help', text: 'Help & Feedback' },
-        { icon: 'get_app', text: 'App Downloads' }
+        { icon: "settings", text: "Settings" },
+        { icon: "help", text: "Help & Feedback" },
+        { icon: "get_app", text: "App Downloads" }
       ],
       createMenu: [
-        { icon: 'photo_album', text: 'Album' },
-        { icon: 'people', text: 'Shared Album' },
-        { icon: 'movie', text: 'Movie' },
-        { icon: 'library_books', text: 'Animation' },
-        { icon: 'dashboard', text: 'Collage' },
-        { icon: 'book', text: 'Photo book' }
+        { icon: "photo_album", text: "Album" },
+        { icon: "people", text: "Shared Album" },
+        { icon: "movie", text: "Movie" },
+        { icon: "library_books", text: "Animation" },
+        { icon: "dashboard", text: "Collage" },
+        { icon: "book", text: "Photo book" }
       ]
+    };
+  },
+  methods: {
+    signOut() {
+      console.log("signOut");
+      this.$fireAuth.signOut();
     }
   }
-}
+};
 </script>
 
 <style lang="sass">

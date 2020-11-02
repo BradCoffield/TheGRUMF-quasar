@@ -1,9 +1,12 @@
 <template>
   <q-page  >
     <div>
-      <h2 style="font-size:48px;font-weight:bold;border-bottom:2px dotted">Active Submissions</h2>
+     <q-card  class="q-pa-md bg-dark q-mb-xl q-mt-xl text-primary header-card" >
+      <h2>Active Submissions   <div class="text-subtitle2 text-italic">
+          Deal with 'em.
+        </div></h2></q-card>
       <!-- <br /><br />  -->
-      <q-card>
+      <q-card     >
         <q-table
           row-key="key"
           :columns="columns"
@@ -11,6 +14,7 @@
           color="primary"
           :filter="filter"
           dark
+       
            
         >`  @`
           <template v-slot:top>
@@ -24,7 +28,16 @@
   
           <template v-slot:body-cell-actions="props">
             <q-td :props="props">
+      
               <q-btn
+                dense
+                round
+                flat
+                color="grey"
+                @click="viewItem(props)"
+                icon="preview"
+              ><q-tooltip content-style="font-size: 16px">View Details</q-tooltip></q-btn>
+                      <q-btn
                 dense
                 round
                 flat
@@ -37,25 +50,17 @@
                 round
                 flat
                 color="grey"
-                @click="viewItem(props)"
-                icon="preview"
-              ><q-tooltip content-style="font-size: 16px">View Details</q-tooltip></q-btn>
-              <q-btn
-                dense
-                round
-                flat
-                color="grey"
                 @click="reviewItem(props)"
                 icon="rate_review"
-              ><q-tooltip content-style="font-size: 16px">Review Submission</q-tooltip></q-btn>
-              <q-btn
+              ><q-tooltip content-style="font-size: 16px">Rate Submission</q-tooltip></q-btn>
+              <!-- <q-btn
                 dense
                 round
                 flat
                 color="grey"
                 @click="deleteItem(props)"
                 icon="delete"
-              ><q-tooltip content-style="font-size: 16px">Delete</q-tooltip></q-btn>
+              ><q-tooltip content-style="font-size: 16px">Delete</q-tooltip></q-btn> -->
             </q-td>
           </template>
   
@@ -100,20 +105,22 @@ export default {
            align: "left",
         },
     
+        {
+          name: "created",
+          label: "Created",
+          field: "createdPretty",
+          sortable: true,
+           align: "left",
+        },
         // {
-        //   name: "updated",
-        //   label: "Updated",
-        //   field: "updatedPretty",
+        //   name: "url",
+        //   label: "Link",
+        //   field: "url",
         //   sortable: true,
         //    align: "left",
         // },
         { name: "actions", label: "Actions", field: "", align: "center" }
-        // { label: 'Actions', field: 'actions', sortable: false },
-        //   { text: 'Calories', value: 'calories' },
-        //   { text: 'Fat (g)', value: 'fat' },
-        //   { text: 'Carbs (g)', value: 'carbs' },
-        //   { text: 'Protein (g)', value: 'protein' },
-        //   { text: 'Iron (%)', value: 'iron' },
+       
       ],
       data: [],
       defaultOpenedDetails: [1],
@@ -123,7 +130,8 @@ export default {
       currentPage: 1,
       perPage: 5,
       errors: [],
-      ref: this.$firestore.collection("issue_Three") //name of the collection in firestore that contains all your real data
+      // ref: this.$firestore.collection("issue_Three")  
+      ref: this.$firestore.collection("submissions")  
     };
   },
   created() {
@@ -147,6 +155,10 @@ export default {
               email: doc.data().email,
               notes: doc.data().notes,
               issue: doc.data().issue,
+              updated: doc.data().updated,
+              created: doc.data().created,
+              updatedPretty: doc.data().updated ? ddate.toDateString() : " ",
+              createdPretty: doc.data().created ? ddate.toDateString() : " ",
               author_letter: doc.data().author_letter,
               genre: doc.data().genre,
               primary_genre: doc.data().primary_genre,
@@ -170,31 +182,27 @@ export default {
   },
   methods: {
     editItem(item) {
-      console.log(item);
+      console.log(item.key);
       //   let itemIndex = this.data.indexOf(item);
       //   console.log(this.data[itemIndex].key);
-      //   this.$router.push({
-      //     name: "edit-cheatsheet",
-      //     params: { id: this.data[itemIndex].key }
-      //   });
+        this.$router.push({
+          name: "edit-submission",
+          params: { id: item.key }
+        });
     },
     viewItem(item) {
       console.log(item);
-      //   let itemIndex = this.data.indexOf(item);
-      //   console.log(this.data[itemIndex].key);
-      //   this.$router.push({
-      //     name: "edit-cheatsheet",
-      //     params: { id: this.data[itemIndex].key }
-      //   });
+         this.$router.push({
+          name: "submission-details",
+          params: { id: item.key }
+        });
     },
     reviewItem(item) {
       console.log(item);
-      //   let itemIndex = this.data.indexOf(item);
-      //   console.log(this.data[itemIndex].key);
-      //   this.$router.push({
-      //     name: "edit-cheatsheet",
-      //     params: { id: this.data[itemIndex].key }
-      //   });
+       this.$router.push({
+          name: "rate-submission",
+          params: { id: item.key }
+        });
     },
     deleteItem(item) {
       console.log(item);
@@ -242,5 +250,7 @@ export default {
 </script>
 
 <style scoped>
-.text-right{text-align: left!important;}
+ 
+.q-table td {
+  font-size: 18px!important;}
 </style>

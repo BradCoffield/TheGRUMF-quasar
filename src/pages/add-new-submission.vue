@@ -1,10 +1,22 @@
 <template>
-  <q-page  >
-    <h2 style="">
-      Add New Submission
-    </h2>
+  <q-page>
+    <!-- <h2 style="">
+      
+        Add New Submission
+        <div class="text-subtitle2 text-italic">
+          Always such hope in beginnings.
+        </div> 
+    </h2> -->
+      <q-card  class="q-pa-md bg-dark q-mb-xl q-mt-xl text-primary header-card"> <h2 style="">
+   
+        Add New Submission
+        <div class="text-subtitle2 text-italic">
+          Always such hope in beginnings.
+        </div>
+    </h2></q-card
+      >
 
-    <q-card>
+    <q-card class=" q-mt-xl">
       <q-form @submit="sendSub" @reset="onReset" class=" bg-dark q-pa-xl">
         <q-input
           v-model="submission.author"
@@ -102,12 +114,13 @@ export default {
         email: "",
         file: "",
         updated: "",
+        created: "",
         notes: "",
         title: "",
         author_letter: "",
         genre: "",
         primary_genre: "",
-        ratings: {}
+        ratings: []
       },
       ref: this.$firestore.collection("submissions")
     };
@@ -120,7 +133,8 @@ export default {
     },
     sendSub(evt) {
       evt.preventDefault();
-      this.submission.updated = this.getDate()
+      this.submission.updated = this.getDate();
+      this.submission.created = this.getDate();
       this.ref
         .add(this.submission)
         .then(function() {
@@ -129,10 +143,7 @@ export default {
         .catch(function(error) {
           console.error("Error writing document: ", error);
         });
-       
     },
-
-  
 
     onReset() {
       this.submission.author = null;
