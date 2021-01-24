@@ -2,7 +2,7 @@
   <q-page  >
     <div>
      <q-card  class="q-pa-md bg-dark q-mb-xl q-mt-xl text-primary header-card" >
-      <h2>Active Submissions   <div class="text-subtitle2 text-italic">
+      <h2 class="">Active Submissions   <div class="text-subtitle2  ">
           Deal with 'em.
         </div></h2></q-card>
       <!-- <br /><br />  -->

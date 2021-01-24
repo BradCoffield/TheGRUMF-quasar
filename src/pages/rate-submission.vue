@@ -12,10 +12,10 @@
         Rating for: {{ submission.title }}
       </div>
       <q-badge color="primary" style="font-size:24px;padding:10px">
-        {{ ratingSlide }}
+        {{ ratingsDraft.ratingNumber }}
       </q-badge>
       <q-slider
-        v-model="ratingSlide"
+        v-model="ratingsDraft.ratingNumber"
         color="primary"
         :min="0"
         :step="1"
@@ -23,7 +23,7 @@
       />
       <q-input
         label="Rating Notes"
-        v-model="ratingNotes"
+        v-model="ratingsDraft.ratingNotes"
         type="textarea"
         dark
         standout="bg-teal text-white"
@@ -97,11 +97,12 @@ export default {
     sendSub(evt) {
       evt.preventDefault();
       this.submission.updated = this.getDate();
-      this.submission.ratings.push({...this.ratingsDraft});
-
+      // this.submission.ratings.push({...this.ratingsDraft});
+      let update = {}
+      update[`ratings.${this.ratingsDraft.raterID}`] = this.ratingsDraft
       this.ref
         .doc(this.$route.params.id)
-        .set(this.submission, { merge: true })
+        .update(update)
         .then(function() {
           console.log("Document successfully written!");
         })

@@ -12,9 +12,9 @@
           class="q-mx-md"
         />
 
-        <q-toolbar-title shrink class="row items-center no-wrap">
+        <q-toolbar-title shrink class="row items-center no-wrap text-center">
           <!-- <img src="https://cdn.quasar.dev/img/layout-gallery/logo-google.svg"> -->
-          <span class="q-ml-sm">TheGRUMF</span>
+          <span class="q-ml-sm frijole " style="font-size:36px">TheGRUMF</span>
         </q-toolbar-title>
 
         <q-space />
@@ -52,14 +52,7 @@
           ></template>
           <template v-if="this.$store.state.store.user">
             <q-btn flat label="Sign Out" @click="signOut"></q-btn>
-            <!-- <q-btn round flat>
-              <q-avatar size="26px">
-                <img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-              </q-avatar>
-              <q-tooltip>{{
-                this.$store.state.store.user.displayName
-              }}</q-tooltip>
-            </q-btn> -->
+        
             </template>
         </div>
       </q-toolbar>

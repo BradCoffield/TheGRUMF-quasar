@@ -1,7 +1,7 @@
 <template>
   <q-page>
        <q-card  class="q-pa-md bg-dark q-mb-xl q-mt-xl text-primary header-card" >  <h2 style="">
-      Edit Submission<div class="text-subtitle2"><em>I'm sure you have your reasons.</em></div>
+      Edit Submission<div class="text-subtitle2">I'm sure you have your reasons.</div>
     </h2>
    
        </q-card>

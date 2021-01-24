@@ -10,7 +10,7 @@
       <q-card  class="q-pa-md bg-dark q-mb-xl q-mt-xl text-primary header-card"> <h2 style="">
    
         Add New Submission
-        <div class="text-subtitle2 text-italic">
+        <div class="text-subtitle2  ">
           Always such hope in beginnings.
         </div>
     </h2></q-card
