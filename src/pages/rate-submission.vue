@@ -20,6 +20,7 @@
         :min="0"
         :step="1"
         :max="10"
+        dark
       />
       <q-input
         label="Rating Notes"
@@ -74,15 +75,17 @@ export default {
     };
   },
   created() {
-    console.log(this.$store.state.store.user);
+    console.log("params id:",this.$route.params.id)
+    console.log("store user:", this.$store.state.store.user);
     this.ref
       .doc(this.$route.params.id)
       .get()
       .then(doc => {
         if (doc.exists) {
           this.submission = doc.data();
-          console.log(this.submission);
-          console.log(this.$route.params.id);
+          console.log("this submission:",this.submission);
+          console.log("this submission ratings:",this.submission.ratings);
+          console.log("params id:",this.$route.params.id);
         } else {
           alert("No such document!");
         }
