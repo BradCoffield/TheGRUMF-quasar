@@ -2,7 +2,7 @@
   <q-page class="text-body1">
     <q-card class="q-pa-md bg-dark q-mb-xl q-mt-xl text-primary header-card">
       <h2>Stock Responses<div class="text-subtitle2  ">
-          Courtesy of <span class="frijole">TheGRUMF</span>
+          Courtesy of <span class="brandFont">TheGRUMF</span>
         </div></h2>
     </q-card>
     <q-card dark class="bg-dark   q-mb-xl  ">

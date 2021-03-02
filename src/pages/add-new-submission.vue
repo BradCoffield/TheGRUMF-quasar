@@ -7,14 +7,14 @@
           Always such hope in beginnings.
         </div> 
     </h2> -->
-      <q-card  class="q-pa-md bg-dark q-mb-xl q-mt-xl text-primary header-card"> <h2 style="">
-   
+    <q-card class="q-pa-md bg-dark q-mb-xl q-mt-xl text-primary header-card">
+      <h2 style="">
         Add New Submission
         <div class="text-subtitle2  ">
           Always such hope in beginnings.
         </div>
-    </h2></q-card
-      >
+      </h2></q-card
+    >
 
     <q-card class=" q-mt-xl">
       <q-form @submit="sendSub" @reset="onReset" class=" bg-dark q-pa-xl">
@@ -45,24 +45,29 @@
           lazy-rules
           :rules="[val => (val && val.length > 0) || 'Please type something']"
         ></q-input>
-        <q-input
-          v-model="submission.genre"
-          label="Genre"
-          required
-          dark
-          standout="bg-teal text-white"
-          lazy-rules
-          :rules="[val => (val && val.length > 0) || 'Please type something']"
-        ></q-input>
-        <q-input
-          v-model="submission.primary_genre"
-          label="Author's Primary Genre"
-          required
-          dark
-          standout="bg-teal text-white"
-          lazy-rules
-          :rules="[val => (val && val.length > 0) || 'Please type something']"
-        ></q-input>
+        <div class="     text-white">
+          <span style="font-size:18px">Submission's Genre</span>
+          <q-option-group
+            v-model="submission.genre"
+            :options="genre_options"
+            color="teal"
+            inline
+            required
+            dark
+          />
+        </div>
+
+        <div class="q-mt-xl q-mb-xl text-white">
+          <span style="font-size:18px">Author's Primary Genre</span>
+          <q-option-group
+            v-model="submission.primary_genre"
+            :options="genre_options"
+            color="teal"
+            inline
+            required
+            dark
+          />
+        </div>
 
         <q-input
           v-model="submission.file"
@@ -71,9 +76,7 @@
           dark
           standout="bg-teal text-white"
         ></q-input>
-
-        <!-- <v-select :items="items" label="Which Issue?" v-model="submission.issue" :item-value="submission.issue" required> </v-select> -->
-
+ 
         <q-input
           label="Author Letter"
           v-model="submission.author_letter"
@@ -90,6 +93,13 @@
           standout="bg-teal text-white"
         >
         </q-input>
+        <q-input
+          v-model="submission.issue"
+          label="Issue"
+          required
+          dark
+          standout="bg-teal text-white"
+        ></q-input>
 
         <div>
           <q-btn label="Submit" type="submit" color="secondary" />
@@ -103,12 +113,48 @@
         </div>
       </q-form>
     </q-card>
+    <success-dialog
+      :show="successDialogShow"
+      @clearForm="this.onReset"
+      @closeDialog="this.successDialogShow = false"
+    ></success-dialog>
+    <error-dialog
+      :show="errorDialogShow"
+      @closeDialog="this.errorDialogShow = false"
+    ></error-dialog>
   </q-page>
 </template>
 <script>
+import SuccessDialog from "components/SuccessDialog.vue";
+import ErrorDialog from "components/ErrorDialog.vue";
 export default {
+  components: { SuccessDialog, ErrorDialog },
   data() {
     return {
+      successDialogShow: false,
+      errorDialogShow: false,
+      genre_options: [
+        {
+          label: "Fiction",
+          value: "Fiction"
+        },
+        {
+          label: "Poetry",
+          value: "Poetry"
+        },
+        {
+          label: "Creative Nonfiction",
+          value: "Creative Nonfiction"
+        },
+        {
+          label: "Visual",
+          value: "Visual"
+        },
+        {
+          label: "Other",
+          value: "Other"
+        }
+      ],
       submission: {
         author: "",
         email: "",
@@ -120,7 +166,8 @@ export default {
         author_letter: "",
         genre: "",
         primary_genre: "",
-        ratings: []
+        ratings: [],
+        issue: ""
       },
       ref: this.$firestore.collection("submissions")
     };
@@ -132,6 +179,7 @@ export default {
       return date.toISOString();
     },
     sendSub(evt) {
+      let here = this;
       evt.preventDefault();
       this.submission.updated = this.getDate();
       this.submission.created = this.getDate();
@@ -139,9 +187,11 @@ export default {
         .add(this.submission)
         .then(function() {
           console.log("Document successfully written!");
+          here.successDialogShow = true;
         })
         .catch(function(error) {
           console.error("Error writing document: ", error);
+          here.errorDialogShow = true;
         });
     },
 
@@ -155,6 +205,7 @@ export default {
       this.submission.author_letter = null;
       this.submission.genre = null;
       this.submission.primary_genre = null;
+      this.submission.issue = null;
     }
   }
 };

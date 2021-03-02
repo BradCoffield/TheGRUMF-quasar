@@ -14,7 +14,7 @@
 
         <q-toolbar-title shrink class="row items-center no-wrap text-center">
           <!-- <img src="https://cdn.quasar.dev/img/layout-gallery/logo-google.svg"> -->
-          <span class="q-ml-sm frijole " style="font-size:36px">TheGRUMF</span>
+          <span class="q-ml-sm brandFont " style="font-size:36px">TheGRUMF</span>
         </q-toolbar-title>
 
         <q-space />

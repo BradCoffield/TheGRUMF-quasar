@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-  <h2 ><span class="frijole">TheGRUMF</span> </h2>
+  <h2 ><span class="brandFont">TheGRUMF</span> </h2>
  
   </q-page>
 </template>

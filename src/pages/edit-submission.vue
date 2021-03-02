@@ -82,13 +82,16 @@
 
         <div>
           <q-btn label="Submit" type="submit" color="secondary" />
-          <q-btn
+          <q-btn label="Cancel" to="/active-submissions" color="secondary"
+            flat
+            class="q-ml-sm"></q-btn>
+          <!-- <q-btn
             label="Reset"
             type="reset"
             color="secondary"
             flat
             class="q-ml-sm"
-          />
+          /> -->
         </div>
       </q-form>
     </q-card>
