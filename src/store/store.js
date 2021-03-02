@@ -2,7 +2,29 @@ import { firebaseAuth, firebaseDb } from "boot/firebase";
 import { store } from "quasar/wrappers";
 
 export const state = () => ({
-  user: false
+  user: false,
+  genre_options: [
+    {
+      label: "Fiction",
+      value: "Fiction"
+    },
+    {
+      label: "Poetry",
+      value: "Poetry"
+    },
+    {
+      label: "Creative Nonfiction",
+      value: "Creative Nonfiction"
+    },
+    {
+      label: "Visual",
+      value: "Visual"
+    },
+    {
+      label: "Other",
+      value: "Other"
+    }
+  ],
 });
 
 export const mutations = {

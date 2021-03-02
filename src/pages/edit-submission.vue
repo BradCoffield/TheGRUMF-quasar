@@ -1,10 +1,11 @@
 <template>
   <q-page>
-       <q-card  class="q-pa-md bg-dark q-mb-xl q-mt-xl text-primary header-card" >  <h2 style="">
-      Edit Submission<div class="text-subtitle2">I'm sure you have your reasons.</div>
-    </h2>
-   
-       </q-card>
+    <q-card class="q-pa-md bg-dark q-mb-xl q-mt-xl text-primary header-card">
+      <h2 style="">
+        Edit Submission
+        <div class="text-subtitle2">I'm sure you have your reasons.</div>
+      </h2>
+    </q-card>
     <q-card>
       <q-form @submit="sendSub" @reset="onReset" class=" bg-dark q-pa-xl">
         <q-input
@@ -34,24 +35,30 @@
           lazy-rules
           :rules="[val => (val && val.length > 0) || 'Please type something']"
         ></q-input>
-        <q-input
-          v-model="submission.genre"
-          label="Genre"
-          required
-          dark
-          standout="bg-teal text-white"
-          lazy-rules
-          :rules="[val => (val && val.length > 0) || 'Please type something']"
-        ></q-input>
-        <q-input
-          v-model="submission.primary_genre"
-          label="Author's Primary Genre"
-          required
-          dark
-          standout="bg-teal text-white"
-          lazy-rules
-          :rules="[val => (val && val.length > 0) || 'Please type something']"
-        ></q-input>
+
+        <div class="     text-white">
+          <span style="font-size:18px">Submission's Genre</span>
+          <q-option-group
+            v-model="submission.genre"
+            :options="genre_options"
+            color="teal"
+            inline
+            required
+            dark
+          />
+        </div>
+
+        <div class="q-mt-xl q-mb-xl text-white">
+          <span style="font-size:18px">Author's Primary Genre</span>
+          <q-option-group
+            v-model="submission.primary_genre"
+            :options="genre_options"
+            color="teal"
+            inline
+            required
+            dark
+          />
+        </div>
 
         <q-input
           v-model="submission.file"
@@ -82,9 +89,13 @@
 
         <div>
           <q-btn label="Submit" type="submit" color="secondary" />
-          <q-btn label="Cancel" to="/active-submissions" color="secondary"
+          <q-btn
+            label="Cancel"
+            to="/active-submissions"
+            color="secondary"
             flat
-            class="q-ml-sm"></q-btn>
+            class="q-ml-sm"
+          ></q-btn>
           <!-- <q-btn
             label="Reset"
             type="reset"
@@ -95,14 +106,28 @@
         </div>
       </q-form>
     </q-card>
+    <success-dialog
+      :show="successDialogShow"
+      @clearForm="this.onReset"
+      @closeDialog="this.successDialogShow = false"
+    ></success-dialog>
+    <error-dialog
+      :show="errorDialogShow"
+      @closeDialog="this.errorDialogShow = false"
+    ></error-dialog>
   </q-page>
 </template>
 
 <script>
+import SuccessDialog from "components/SuccessDialog.vue";
+import ErrorDialog from "components/ErrorDialog.vue";
 export default {
-  name: "editSubmission",
+  name: "EditSubmission",
+  components: { SuccessDialog, ErrorDialog },
   data() {
     return {
+      successDialogShow: false,
+      errorDialogShow: false,
       key: this.$route.params.id,
       submission: {
         author: "",
@@ -117,7 +142,7 @@ export default {
         ratings: []
       },
       ref: this.$firestore.collection("submissions")
-            // ref: this.$firestore.collection("issue_Three") 
+      // ref: this.$firestore.collection("issue_Three")
     };
   },
   created() {
@@ -163,6 +188,11 @@ export default {
       this.submission.author_letter = null;
       this.submission.genre = null;
       this.submission.primary_genre = null;
+    }
+  },
+  computed: {
+    genre_options() {
+      return this.$store.state.store.genre_options
     }
   }
 };

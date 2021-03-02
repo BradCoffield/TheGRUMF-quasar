@@ -1,12 +1,6 @@
 <template>
   <q-page>
-    <!-- <h2 style="">
-      
-        Add New Submission
-        <div class="text-subtitle2 text-italic">
-          Always such hope in beginnings.
-        </div> 
-    </h2> -->
+ 
     <q-card class="q-pa-md bg-dark q-mb-xl q-mt-xl text-primary header-card">
       <h2 style="">
         Add New Submission
@@ -45,6 +39,7 @@
           lazy-rules
           :rules="[val => (val && val.length > 0) || 'Please type something']"
         ></q-input>
+      
         <div class="     text-white">
           <span style="font-size:18px">Submission's Genre</span>
           <q-option-group
@@ -128,33 +123,13 @@
 import SuccessDialog from "components/SuccessDialog.vue";
 import ErrorDialog from "components/ErrorDialog.vue";
 export default {
+  name: "AddSubmission",
   components: { SuccessDialog, ErrorDialog },
   data() {
     return {
       successDialogShow: false,
       errorDialogShow: false,
-      genre_options: [
-        {
-          label: "Fiction",
-          value: "Fiction"
-        },
-        {
-          label: "Poetry",
-          value: "Poetry"
-        },
-        {
-          label: "Creative Nonfiction",
-          value: "Creative Nonfiction"
-        },
-        {
-          label: "Visual",
-          value: "Visual"
-        },
-        {
-          label: "Other",
-          value: "Other"
-        }
-      ],
+      
       submission: {
         author: "",
         email: "",
@@ -172,7 +147,11 @@ export default {
       ref: this.$firestore.collection("submissions")
     };
   },
-
+  computed: {
+    genre_options() {
+      return this.$store.state.store.genre_options
+    }
+  },
   methods: {
     getDate() {
       let date = new Date();
