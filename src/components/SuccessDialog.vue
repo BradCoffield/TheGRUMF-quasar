@@ -7,14 +7,18 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn
-          flat
-          label="Create Another"
-          color="secondary"
-          v-close-popup
-          @click="clearForm"
-        />
+        <template v-if="showClearForm">
+          <q-btn
+            flat
+            label="Create Another"
+            color="secondary"
+            v-close-popup
+            @click="clearForm"
+          />
+        </template>
+        <q-btn flat label="Active Subs" color="secondary" v-close-popup to="/active-submissions" />
         <q-btn flat label="Go Home" color="secondary" v-close-popup to="/" />
+        
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -25,6 +29,10 @@ export default {
   
   props: {
     show: {
+      type: Boolean,
+      required: false
+    }, 
+    showClearForm: {
       type: Boolean,
       required: false
     }

@@ -86,6 +86,13 @@
           standout="bg-teal text-white"
         >
         </q-input>
+                <q-input
+          v-model="submission.issue"
+          label="Issue"
+          required
+          dark
+          standout="bg-teal text-white"
+        ></q-input>
 
         <div>
           <q-btn label="Submit" type="submit" color="secondary" />
@@ -139,7 +146,8 @@ export default {
         author_letter: "",
         genre: "",
         primary_genre: "",
-        ratings: []
+        ratings: [],
+        issue: ""
       },
       ref: this.$firestore.collection("submissions")
       // ref: this.$firestore.collection("issue_Three")
@@ -188,6 +196,7 @@ export default {
       this.submission.author_letter = null;
       this.submission.genre = null;
       this.submission.primary_genre = null;
+       this.submission.issue = null;
     }
   },
   computed: {

@@ -3,13 +3,13 @@
     <q-card class="q-pa-md bg-dark q-mb-xl q-mt-xl text-primary header-card">
       <h2>
         Rate Submission
-        <div class="text-subtitle2">You judgy fuck.</div>
+        <div class="text-subtitle2">You judgy f*ck.</div>
       </h2></q-card
     >
 
     <q-form @submit="sendSub" @reset="onReset" class=" bg-dark q-pa-xl">
       <div class="text-h4 text-white q-mb-xl">
-        Rating for: {{ submission.title }}
+        Rating for: {{ submission.title }} by {{ submission.author }}
       </div>
       <q-badge color="primary" style="font-size:24px;padding:10px">
         {{ ratingsDraft.ratingNumber }}
@@ -32,23 +32,60 @@
       </q-input>
       <div>
         <q-btn label="Submit" type="submit" color="secondary" />
-        <q-btn
+        <!-- <q-btn
           label="Reset"
           type="reset"
           color="secondary"
           flat
           class="q-ml-sm"
-        />
+        /> -->
       </div>
     </q-form>
+    <success-dialog
+      :show="successDialogShow"
+      @clearForm="this.onReset"
+      @closeDialog="this.successDialogShow = false"
+    ></success-dialog>
+    <error-dialog
+      :show="errorDialogShow"
+      @closeDialog="this.errorDialogShow = false"
+    ></error-dialog>
+    <q-dialog v-model="existingRatingAlertShow" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="done_outline" color="dark" text-color="white" />
+          <span class="q-ml-sm"
+            >Please note: You have an already existing rating. You may edit it
+            here.</span
+          >
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            label="Active Subs"
+            color="secondary"
+            v-close-popup
+            to="/active-submissions"
+          />
+          <q-btn flat label="Close" color="secondary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
 <script>
+import SuccessDialog from "components/SuccessDialog.vue";
+import ErrorDialog from "components/ErrorDialog.vue";
 export default {
   name: "submissionDetails",
+  components: { SuccessDialog, ErrorDialog },
   data() {
     return {
+      existingRatingAlertShow: false,
+      successDialogShow: false,
+      errorDialogShow: false,
       key: this.$route.params.id,
       ratingSlide: 0,
       ratingNotes: "",
@@ -75,18 +112,27 @@ export default {
     };
   },
   created() {
-    console.log("params id:",this.$route.params.id)
+    console.log("params id:", this.$route.params.id);
     console.log("store user:", this.$store.state.store.user);
+    let loggedUserUID = this.$store.state.store.user.uid;
     this.ref
       .doc(this.$route.params.id)
       .get()
       .then(doc => {
         if (doc.exists) {
+          //populate the submission details
           this.submission = doc.data();
-          console.log("this submission:",this.submission);
-          console.log("this submission ratings:",this.submission.ratings);
-          console.log("params id:",this.$route.params.id);
+// if the logged in user already has a rating for this item
+          if (this.submission.ratings[loggedUserUID])
+          this.existingRatingAlertShow = true
+            this.ratingsDraft.ratingNumber = this.submission.ratings[
+              loggedUserUID
+            ].ratingNumber;
+          this.ratingsDraft.ratingNotes = this.submission.ratings[
+            loggedUserUID
+          ].ratingNotes;
         } else {
+          this.ratingsDraft.ratingNumber = 0;
           alert("No such document!");
         }
       });
@@ -98,19 +144,22 @@ export default {
       return date.toISOString();
     },
     sendSub(evt) {
+      let here = this;
       evt.preventDefault();
       this.submission.updated = this.getDate();
       // this.submission.ratings.push({...this.ratingsDraft});
-      let update = {}
-      update[`ratings.${this.ratingsDraft.raterID}`] = this.ratingsDraft
+      let update = {};
+      update[`ratings.${this.ratingsDraft.raterID}`] = this.ratingsDraft;
       this.ref
         .doc(this.$route.params.id)
         .update(update)
         .then(function() {
           console.log("Document successfully written!");
+          here.successDialogShow = true;
         })
         .catch(function(error) {
           console.error("Error writing document: ", error);
+          here.errorDialogShow = true;
         });
     },
     onReset() {

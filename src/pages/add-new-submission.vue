@@ -1,6 +1,5 @@
 <template>
   <q-page>
- 
     <q-card class="q-pa-md bg-dark q-mb-xl q-mt-xl text-primary header-card">
       <h2 style="">
         Add New Submission
@@ -39,7 +38,7 @@
           lazy-rules
           :rules="[val => (val && val.length > 0) || 'Please type something']"
         ></q-input>
-      
+
         <div class="     text-white">
           <span style="font-size:18px">Submission's Genre</span>
           <q-option-group
@@ -71,7 +70,7 @@
           dark
           standout="bg-teal text-white"
         ></q-input>
- 
+
         <q-input
           label="Author Letter"
           v-model="submission.author_letter"
@@ -110,6 +109,7 @@
     </q-card>
     <success-dialog
       :show="successDialogShow"
+      :showClearForm="true"
       @clearForm="this.onReset"
       @closeDialog="this.successDialogShow = false"
     ></success-dialog>
@@ -129,7 +129,7 @@ export default {
     return {
       successDialogShow: false,
       errorDialogShow: false,
-      
+
       submission: {
         author: "",
         email: "",
@@ -142,14 +142,20 @@ export default {
         genre: "",
         primary_genre: "",
         ratings: [],
-        issue: ""
+        issue: "",
+        decisionObject: {
+          decisionStatus: false, //false if final decision unmade, which when adding ofc it isn't.
+          finalDecision: "",
+          decisionNotification: "",
+          decisionNotes: ""
+        }
       },
       ref: this.$firestore.collection("submissions")
     };
   },
   computed: {
     genre_options() {
-      return this.$store.state.store.genre_options
+      return this.$store.state.store.genre_options;
     }
   },
   methods: {
@@ -175,10 +181,10 @@ export default {
     },
 
     onReset() {
-      this.submission.author = null;
-      this.submission.email = null;
-      this.submission.file = null;
-      this.submission.updated = null;
+      this.submission.author = "";
+      this.submission.email = "";
+      this.submission.file = "";
+      this.submission.updated = "";
       this.submission.notes = null;
       this.submission.title = null;
       this.submission.author_letter = null;
