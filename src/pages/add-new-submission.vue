@@ -17,8 +17,7 @@
           required
           dark
           standout="bg-teal text-white"
-          lazy-rules
-          :rules="[val => (val && val.length > 0) || 'Please type something']"
+          
         ></q-input>
         <q-input
           v-model="submission.email"
@@ -26,8 +25,6 @@
           required
           dark
           standout="bg-teal text-white"
-          lazy-rules
-          :rules="[val => (val && val.length > 0) || 'Please type something']"
         ></q-input>
         <q-input
           v-model="submission.title"
@@ -35,8 +32,6 @@
           required
           dark
           standout="bg-teal text-white"
-          lazy-rules
-          :rules="[val => (val && val.length > 0) || 'Please type something']"
         ></q-input>
 
         <div class="     text-white">
@@ -46,7 +41,6 @@
             :options="genre_options"
             color="teal"
             inline
-            required
             dark
           />
         </div>
@@ -58,7 +52,6 @@
             :options="genre_options"
             color="teal"
             inline
-            required
             dark
           />
         </div>
@@ -185,12 +178,12 @@ export default {
       this.submission.email = "";
       this.submission.file = "";
       this.submission.updated = "";
-      this.submission.notes = null;
-      this.submission.title = null;
-      this.submission.author_letter = null;
-      this.submission.genre = null;
-      this.submission.primary_genre = null;
-      this.submission.issue = null;
+      this.submission.notes = "";
+      this.submission.title = "";
+      this.submission.author_letter = "";
+      this.submission.genre = "";
+      this.submission.primary_genre = "";
+      this.submission.issue = "";
     }
   }
 };
