@@ -120,14 +120,15 @@ export default {
       .get()
       .then(doc => {
         if (doc.exists) {
+          this.ratingsDraft.ratingNumber = 0;
           //populate the submission details
           this.submission = doc.data();
-// if the logged in user already has a rating for this item
-          if (this.submission.ratings[loggedUserUID])
-          this.existingRatingAlertShow = true
-            this.ratingsDraft.ratingNumber = this.submission.ratings[
-              loggedUserUID
-            ].ratingNumber;
+          // if the logged in user already has a rating for this item
+          if (this.submission.ratings && this.submission.ratings[loggedUserUID])
+            this.existingRatingAlertShow = true;
+          this.ratingsDraft.ratingNumber = this.submission.ratings[
+            loggedUserUID
+          ].ratingNumber;
           this.ratingsDraft.ratingNotes = this.submission.ratings[
             loggedUserUID
           ].ratingNotes;
