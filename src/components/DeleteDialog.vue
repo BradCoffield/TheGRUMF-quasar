@@ -33,7 +33,7 @@
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Cancel" color="secondary" v-close-popup />
+          <q-btn flat label="Close" color="secondary" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
