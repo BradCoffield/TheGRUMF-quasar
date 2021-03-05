@@ -1,8 +1,8 @@
 <template>
   <div>
     <list-submissions-table
-      pageTitle="Unfinalized Submissions"
-      pageSubtitle="They linger here. Waiting..."
+      pageTitle="Finalized Submissions"
+      pageSubtitle="Thank you, submissions."
       :data="data"
       :loading="loading"
     ></list-submissions-table>
@@ -26,12 +26,12 @@ export default {
   created() {
     this.ref.onSnapshot(querySnapshot => {
       querySnapshot.forEach(doc => {
-        if (doc.data().decisionObject.decisionStatus == false) {
+        if (doc.data().decisionObject.decisionStatus == true) {
           let ddate;
           if (doc.data().updated) {
             ddate = new Date(doc.data().updated.toString());
           }
-          console.log("unfinalized:", doc.id); //grabs the individual pieces of our individual records. So they can be table-ified
+          //grabs the individual pieces of our individual records. So they can be table-ified
           this.data.push({
             key: doc.id,
             name: doc.data().author,

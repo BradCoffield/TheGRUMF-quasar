@@ -196,9 +196,10 @@
             no-caps
             size="26px"
             class="GPL__side-btn"
+            to="/unfinalized-submissions"
           >
             <q-icon size="22px" name="insert_link" />
-            <div class="GPL__side-btn__label">Weblinks</div>
+            <div class="GPL__side-btn__label">Unfinalized Submissions</div>
           </q-btn>
         </div>
       </q-page-sticky>

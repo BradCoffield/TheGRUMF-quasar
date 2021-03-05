@@ -3,6 +3,7 @@ import { store } from "quasar/wrappers";
 
 export const state = () => ({
   user: false,
+  currentIssue:"",
   genre_options: [
     {
       label: "Fiction",
@@ -28,6 +29,10 @@ export const state = () => ({
 });
 
 export const mutations = {
+
+  SET_CURRENT_ISSUE(state, issue){
+    state.currentIssue = issue
+  },
  
   SET_USER(state, payload) {
     let authUser = payload;
@@ -42,18 +47,7 @@ export const mutations = {
   RESET_USER(state) {
     state.user = null;
   }
-  // ON_AUTH_STATE_CHANGED_MUTATION: (state, { authUser, claims }) => {
-  //   if (authUser) {
-  //     state.user = {
-  //       uid: authUser.uid,
-  //       email: authUser.email,
-  //       displayName: authUser.displayName,
-  //       picture: claims.picture
-  //     };
-  //   } else {
-  //     state.user = false;
-  //   }
-  // }
+ 
 };
 
 export const getters = {
@@ -81,6 +75,9 @@ export const actions = {
         // User is signed out.
       }
     });
+  },
+  updateCurrentIssue({commit}, issue){
+    commit('SET_CURRENT_ISSUE', issue)
   }
 };
 

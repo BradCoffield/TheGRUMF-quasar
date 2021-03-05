@@ -9,7 +9,7 @@
           </div>
         </h2></q-card
       >
-      <!-- <br /><br />  -->
+
       <q-card>
         <q-table
           row-key="key"
@@ -110,10 +110,7 @@ export default {
       showDeleteDialog: false,
       deleteItemData: {},
       filter: "",
-      search: "",
-      editedKey: "",
-      deleteItemKey: "",
-      dialogDelete: false,
+
       columns: [
         {
           label: "Author",
@@ -156,19 +153,16 @@ export default {
         // },
         { name: "actions", label: "Actions", field: "", align: "center" }
       ],
-
       initialPagination: {
         sortBy: "desc",
         descending: false,
         page: 1,
         rowsPerPage: 15
-        // rowsNumber: xx if getting data from a server
       },
       // ref: this.$firestore.collection("issue_Three")
       ref: this.$firestore.collection("submissions")
     };
   },
-   
   methods: {
     editItem(item) {
       console.log(item.key);
