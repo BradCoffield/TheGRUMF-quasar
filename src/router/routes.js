@@ -7,6 +7,7 @@ const routes = [
       { path: '', component: () => import('pages/Index.vue') },
       { path: '/login', component: () => import('pages/Login.vue') },
       { path: '/active-submissions', component: () => import('pages/list-active-submissions') },
+      { path: '/unfinalized-submissions', component: () => import('pages/list-unfinalized-submissions') },
       { path: '/add-submission', component: () => import('pages/add-new-submission') },
       { path: '/stock-responses', component: () => import('pages/stock-responses') },
       { path: '/edit-submission', component: () => import('pages/edit-submission'), name: 'edit-submission', },
