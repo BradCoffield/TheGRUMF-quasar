@@ -51,15 +51,29 @@
     <q-card class="my-card text-white bg-dark q-pa-xl">
       <h5 class="q-mb-xs">Existing Ratings</h5>
       <hr class="q-mb-lg" />
-      <template v-if="emptyRatings == false"
+      <template v-if="emptyRatings"
         >No one has rated this submission yet.</template
       >
-      <template v-if="emptyRatings == true">
+      <template v-if="emptyRatings == false">
         <ul>
-          <li v-for="item in submission.ratings" v-bind:key="item.name" style="display:inline">
-            Name: {{item.raterName}} <br>
-            Rating: {{item.ratingNumber}} <br>
-            Rating Notes: {{item.ratingNotes}}
+          <li
+            v-for="item in submission.ratings"
+            v-bind:key="item.name"
+            style="display:inline"
+             
+          >
+            <q-card class=" my-card text-white bg-dark q-pa-sm q-ma-sm" >
+                <q-card-section>
+        <div class="text-h6">{{ item.raterName }}</div>
+         
+      </q-card-section>
+       <q-card-section>
+     Rating: {{ item.ratingNumber }} <br />
+              <p>Rating Notes: {{ item.ratingNotes }}</p>
+      </q-card-section>
+              
+            
+            </q-card>
           </li>
         </ul>
       </template>
@@ -96,11 +110,13 @@ export default {
       .then(doc => {
         if (doc.exists) {
           this.submission = doc.data();
-          if (doc.data().ratings.length > 0) {
-            this.emptyRatings = false;
+          console.log("ratings:", this.submission.ratings)
+          if (doc.data().ratings.length == 0) {
+            this.emptyRatings = true;
           }
-          console.log("submission data:", this.submission);
-          console.log(this.$route.params.id);
+          else this.emptyRatings = false
+          // console.log("submission data:", this.submission);
+          // console.log(this.$route.params.id);
         } else {
           alert("No such document!");
         }
