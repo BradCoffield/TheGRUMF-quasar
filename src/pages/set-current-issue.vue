@@ -9,7 +9,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import * as db from "../utils/get-submissions"
+import * as submissionsData from "../utils/get-submissions"
 export default {
     data(){
         return{
