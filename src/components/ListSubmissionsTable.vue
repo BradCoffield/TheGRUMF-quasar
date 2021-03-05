@@ -3,9 +3,9 @@
     <div>
       <q-card class="q-pa-md bg-dark q-mb-xl q-mt-xl text-primary header-card">
         <h2 class="">
-          {{pageTitle}}
+          {{ pageTitle }}
           <div class="text-subtitle2  ">
-            {{pageSubtitle}}
+            {{ pageSubtitle }}
           </div>
         </h2></q-card
       >
@@ -17,8 +17,8 @@
           :data="data"
           color="primary"
           :filter="filter"
-           :loading="loading"
-            :pagination="initialPagination"
+          :loading="loading"
+          :pagination="initialPagination"
           dark
           >` @`
           <template v-slot:top>
@@ -79,23 +79,33 @@
                 color="grey"
                 @click="deleteItem(props)"
                 icon="delete"
-              ><q-tooltip content-style="font-size: 16px">Delete</q-tooltip></q-btn>
+                ><q-tooltip content-style="font-size: 16px"
+                  >Delete</q-tooltip
+                ></q-btn
+              >
             </q-td>
           </template>
         </q-table>
       </q-card>
     </div>
-    <delete-dialog :show="showDeleteDialog" :item="deleteItemData"></delete-dialog>
+    <delete-dialog
+      :show="showDeleteDialog"
+      :item="deleteItemData"
+    ></delete-dialog>
   </q-page>
 </template>
 
 <script>
-import DeleteDialog from "components/DeleteDialog.vue"
+import DeleteDialog from "components/DeleteDialog.vue";
 export default {
-    components: { DeleteDialog },
-    props:{pageTitle: String, data: Array, pageSubtitle: String, loading: Boolean},
+  components: { DeleteDialog },
+  props: {
+    pageTitle: String,
+    data: Array,
+    pageSubtitle: String,
+    loading: Boolean
+  },
   data() {
-    
     return {
       showDeleteDialog: false,
       deleteItemData: {},
@@ -146,9 +156,9 @@ export default {
         // },
         { name: "actions", label: "Actions", field: "", align: "center" }
       ],
-   
-          initialPagination: {
-        sortBy: 'desc',
+
+      initialPagination: {
+        sortBy: "desc",
         descending: false,
         page: 1,
         rowsPerPage: 15
@@ -158,55 +168,10 @@ export default {
       ref: this.$firestore.collection("submissions")
     };
   },
-  created() {
-    this.isLoading = true;
-
-    this.ref.onSnapshot(querySnapshot => {
-      this.data = [];
-      querySnapshot.forEach(doc => {
-        // console.log(doc.id, doc.data())
-        let ddate;
-        if (doc.data().updated) {
-          ddate = new Date(doc.data().updated.toString());
-          // console.log(ddate.toDateString());
-        }
-        //grabs the individual pieces of our individual records. So they can be table-ified
-        this.data.push({
-          key: doc.id,
-          name: doc.data().author,
-          url: doc.data().file,
-          title: doc.data().title,
-          email: doc.data().email,
-          notes: doc.data().notes,
-          issue: doc.data().issue,
-          updated: doc.data().updated,
-          created: doc.data().created,
-          updatedPretty: doc.data().updated ? ddate.toDateString() : " ",
-          createdPretty: doc.data().created ? ddate.toDateString() : " ",
-          author_letter: doc.data().author_letter,
-          genre: doc.data().genre,
-          primary_genre: doc.data().primary_genre,
-          ratings: doc.data().ratings,
-          // decisionStatus: doc.data().decisionObject.decisionStatus,
-          // finalDecision: doc.data().decisionObject.finalDecision,
-          // decisionNotification: doc.data().decisionObject.decisionNotification,
-          // decisionNotes: doc.data().decisionObject.decisionNotes
-        });
-        if (doc.data().decision == "Rejected") {
-          this.pieceRejected = true;
-        }
-        if (doc.data().decision == "Accepted") {
-          this.pieceAccepted = true;
-        }
-      });
-      this.isLoading = false;
-    });
-  },
+   
   methods: {
     editItem(item) {
       console.log(item.key);
-      //   let itemIndex = this.data.indexOf(item);
-      //   console.log(this.data[itemIndex].key);
       this.$router.push({
         name: "edit-submission",
         params: { id: item.key }
@@ -228,11 +193,9 @@ export default {
     },
     deleteItem(item) {
       console.log(item);
-      this.deleteItemData = item
-      this.showDeleteDialog = true
-  
-    },
-    
+      this.deleteItemData = item;
+      this.showDeleteDialog = true;
+    }
   }
 };
 </script>
