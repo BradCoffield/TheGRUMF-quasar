@@ -146,7 +146,7 @@ export default {
         // },
         { name: "actions", label: "Actions", field: "", align: "center" }
       ],
-      data: [],
+   
           initialPagination: {
         sortBy: 'desc',
         descending: false,
@@ -232,40 +232,7 @@ export default {
       this.showDeleteDialog = true
   
     },
-    closeDelete() {
-      this.dialogDelete = false;
-    },
-    //deleteItemConfirm = We are hitting okay in dialog to actually delete item. So this is where we actually delete it.
-    deleteItemConfirm() {
-      this.ref
-        .doc(this.deleteItemKey)
-        .delete()
-        .then(function() {
-          // console.log("uid", firebase.auth().user.uid);
-          console.log("Document successfully deleted!");
-        })
-        .catch(function(error) {
-          // console.log("uid", firebase.auth().user.uid);
-          console.log(firebase.auth().currentUser.email);
-          console.error("Error removing document: ", error);
-        });
-
-      this.closeDelete();
-    },
-    deleteCheatsheet(id) {
-      this.ref
-        .doc(id)
-        .delete()
-        .then(function() {
-          // console.log("uid", firebase.auth().user.uid);
-          console.log("Document successfully deleted!");
-        })
-        .catch(function(error) {
-          // console.log("uid", firebase.auth().user.uid);
-          console.log(firebase.auth().currentUser.email);
-          console.error("Error removing document: ", error);
-        });
-    }
+    
   }
 };
 </script>
