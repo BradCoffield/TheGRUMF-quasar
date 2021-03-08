@@ -70,7 +70,7 @@
                   >Rate Submission</q-tooltip
                 ></q-btn
               >
-              <q-btn
+              <!-- <q-btn
                 dense
                 round
                 flat
@@ -80,7 +80,7 @@
                 ><q-tooltip content-style="font-size: 16px"
                   >Delete</q-tooltip
                 ></q-btn
-              >
+              > -->
             </q-td>
           </template>
         </q-table>
