@@ -140,6 +140,13 @@ export default {
           sortable: true,
           align: "left"
         },
+           {
+          name: "issue",
+          label: "Issue",
+          field: "issue",
+          sortable: true,
+          align: "left"
+        },
         // {
         //   name: "url",
         //   label: "Link",

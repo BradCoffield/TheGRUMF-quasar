@@ -10,6 +10,7 @@ const routes = [
       { path: '/unfinalized-submissions', component: () => import('pages/list-unfinalized-submissions') },
       { path: '/finalized-submissions', component: () => import('pages/list-finalized-submissions') },
       { path: '/every-submission-ever', component: () => import('pages/every-submission-ever') },
+      { path: '/current-submissions-unrated', component: () => import('pages/submissions-unrated-by-me') },
       { path: '/add-submission', component: () => import('pages/add-new-submission') },
       { path: '/stock-responses', component: () => import('pages/stock-responses') },
       { path: '/edit-submission', component: () => import('pages/edit-submission'), name: 'edit-submission', },

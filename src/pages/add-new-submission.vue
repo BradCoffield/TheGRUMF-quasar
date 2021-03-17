@@ -135,7 +135,7 @@ export default {
         genre: "",
         primary_genre: "",
         ratings: [],
-        issue: "",
+        issue: this.$store.state.store.currentIssue,
         decisionObject: {
           decisionStatus: false, //false if final decision unmade, which when adding ofc it isn't.
           finalDecision: "",
@@ -183,7 +183,7 @@ export default {
       this.submission.author_letter = "";
       this.submission.genre = "";
       this.submission.primary_genre = "";
-      this.submission.issue = "";
+      this.submission.issue = this.$store.state.store.currentIssue;
     }
   }
 };

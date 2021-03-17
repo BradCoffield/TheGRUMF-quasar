@@ -11,6 +11,7 @@
 
 <script>
 import ListSubmissionsTable from "components/ListSubmissionsTable";
+import submissionsData from "../utils/get-submissions";
 export default {
   components: { ListSubmissionsTable },
   data() {
@@ -24,33 +25,11 @@ export default {
     };
   },
   created() {
-    this.ref.onSnapshot(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        let ddate;
-        if (doc.data().updated) {
-          ddate = new Date(doc.data().updated.toString());
-        }
-        this.data.push({
-          key: doc.id,
-          name: doc.data().author,
-          url: doc.data().file,
-          title: doc.data().title,
-          email: doc.data().email,
-          notes: doc.data().notes,
-          issue: doc.data().issue,
-          updated: doc.data().updated,
-          created: doc.data().created,
-          updatedPretty: doc.data().updated ? ddate.toDateString() : " ",
-          createdPretty: doc.data().created ? ddate.toDateString() : " ",
-          author_letter: doc.data().author_letter,
-          genre: doc.data().genre,
-          primary_genre: doc.data().primary_genre,
-          ratings: doc.data().ratings,
-          decisionObject: doc.data().decisionObject
-        });
-      });
-      this.loading = false;
-    });
+   (async () => {
+      let data = await submissionsData();
+      this.data = data;
+      this.loading = false
+    })();
   }
 };
 </script>

@@ -3,7 +3,7 @@ import { store } from "quasar/wrappers";
 
 export const state = () => ({
   user: false,
-  currentIssue:"",
+  currentIssue:"three",
   genre_options: [
     {
       label: "Fiction",
