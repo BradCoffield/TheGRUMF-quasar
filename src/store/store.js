@@ -3,7 +3,7 @@ import { store } from "quasar/wrappers";
 
 export const state = () => ({
   user: false,
-  currentIssue:"three",
+  currentIssue:"",
   genre_options: [
     {
       label: "Fiction",
@@ -77,6 +77,7 @@ export const actions = {
     });
   },
   updateCurrentIssue({commit}, issue){
+    console.log("in store, updatecurrentissue and payload = ", issue);
     commit('SET_CURRENT_ISSUE', issue)
   }
 };

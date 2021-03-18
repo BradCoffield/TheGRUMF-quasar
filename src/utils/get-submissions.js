@@ -11,6 +11,8 @@ const submissionsData = async () => {
     if (doc.data().updated) {
       ddate = new Date(doc.data().updated.toString());
     }
+    
+    //these two build on each other and the imported thing so that we can regular case the issue title
     function toSpaceCase(string) {
       return noCase(string)
         .replace(/[\W_]+(.|$)/g, function(matches, match) {

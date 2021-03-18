@@ -67,16 +67,18 @@
       <q-scroll-area class="fit">
         <q-toolbar class="GPL__toolbar">
           <q-toolbar-title class="row items-center text-grey-8">
-            <img
-              class="q-pl-md"
-              src="https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg"
-            />
-            <span class="q-ml-sm">Photos</span>
+           
+            <span class="q-ml-sm">TheGrumf</span>
           </q-toolbar-title>
         </q-toolbar>
 
         <q-list padding>
-          <q-item
+           <q-item v-for="route in siteMap" :key="route.path" :to="route.path">
+ {{ route.path }} 
+          </q-item> 
+          
+ 
+          <!-- <q-item
             v-for="link in links1"
             :key="link.text"
             clickable
@@ -120,10 +122,10 @@
             <q-item-section>
               <q-item-label>{{ link.text }}</q-item-label>
             </q-item-section>
-          </q-item>
+          </q-item> -->
 
           <q-separator class="q-my-md" />
-
+<!-- 
           <q-item clickable class="GPL__drawer-item GPL__drawer-item--storage">
             <q-item-section avatar>
               <q-icon name="cloud" />
@@ -133,7 +135,7 @@
               <q-linear-progress :value="storage" class="q-my-sm" />
               <q-item-label caption>2.6 GB of 15 GB</q-item-label>
             </q-item-section>
-          </q-item>
+          </q-item> -->
         </q-list>
       </q-scroll-area>
     </q-drawer>
@@ -216,31 +218,32 @@ export default {
     return {
       leftDrawerOpen: false,
       search: "",
-      storage: 0.26,
-      links1: [
-        { icon: "photo", text: "Photos" },
-        { icon: "photo_album", text: "Albums" },
-        { icon: "assistant", text: "Assistant" },
-        { icon: "people", text: "Sharing" },
-        { icon: "book", text: "Photo books" }
-      ],
-      links2: [
-        { icon: "archive", text: "Archive" },
-        { icon: "delete", text: "Trash" }
-      ],
-      links3: [
-        { icon: "settings", text: "Settings" },
-        { icon: "help", text: "Help & Feedback" },
-        { icon: "get_app", text: "App Downloads" }
-      ],
-      createMenu: [
-        { icon: "photo_album", text: "Album" },
-        { icon: "people", text: "Shared Album" },
-        { icon: "movie", text: "Movie" },
-        { icon: "library_books", text: "Animation" },
-        { icon: "dashboard", text: "Collage" },
-        { icon: "book", text: "Photo book" }
-      ]
+      siteMap: this.$router.options.routes[0].children
+      // storage: 0.26,
+      // links1: [
+      //   { icon: "photo", text: "Photos" },
+      //   { icon: "photo_album", text: "Albums" },
+      //   { icon: "assistant", text: "Assistant" },
+      //   { icon: "people", text: "Sharing" },
+      //   { icon: "book", text: "Photo books" }
+      // ],
+      // links2: [
+      //   { icon: "archive", text: "Archive" },
+      //   { icon: "delete", text: "Trash" }
+      // ],
+      // links3: [
+      //   { icon: "settings", text: "Settings" },
+      //   { icon: "help", text: "Help & Feedback" },
+      //   { icon: "get_app", text: "App Downloads" }
+      // ],
+      // createMenu: [
+      //   { icon: "photo_album", text: "Album" },
+      //   { icon: "people", text: "Shared Album" },
+      //   { icon: "movie", text: "Movie" },
+      //   { icon: "library_books", text: "Animation" },
+      //   { icon: "dashboard", text: "Collage" },
+      //   { icon: "book", text: "Photo book" }
+      // ]
     };
   },
   methods: {
